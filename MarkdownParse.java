@@ -13,19 +13,23 @@ public class MarkdownParse {
         while(currentIndex < markdown.length() && currentIndex >= 0) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
-            if(markdown.charAt(nextCloseBracket + 1) == '('){
-                int openParen = markdown.indexOf("(", nextCloseBracket);
-                int closeParen = markdown.indexOf(")", openParen);
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
-                currentIndex = closeParen + 1;
-            } else{
-                currentIndex = nextOpenBracket + 1;
+            try{
+                if(markdown.charAt(nextCloseBracket + 1) == '('){
+                    int openParen = markdown.indexOf("(", nextCloseBracket);
+                    int closeParen = markdown.indexOf(")", openParen);
+                    toReturn.add(markdown.substring(openParen + 1, closeParen));
+                    currentIndex = closeParen + 1;
+                } else{
+                    currentIndex = nextOpenBracket + 1;
+                }
+            } catch(IndexOutOfBoundsException e){
+                break;
             }
         }
         return toReturn;
     }
     public static void main(String[] args) throws IOException {
-		Path fileName = Path.of(args[0]);
+		Path fileName = Path.of("break2-file.md");
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
         System.out.println(links);
