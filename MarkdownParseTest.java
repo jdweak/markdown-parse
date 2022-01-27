@@ -1,9 +1,45 @@
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.util.List;
+
 import org.junit.*;
 
 public class MarkdownParseTest {
-    @Test
-    public void addition() {
-        assertEquals(2, 1 + 1);
+
+    @Test //indicates the following method is a junit test
+    public void addition() { //method header
+        assertEquals(2, 1 + 1); //checking whether the first and second params are equal, fail test if not
+    }
+
+    @Test 
+    public void testGetLinks1() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file.md"));
+        List<String> expected = List.of("https://something.com","some-page.html");
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
+
+    @Test 
+    public void testBreak1File() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/break-file.md"));
+        List<String> expected = List.of("https://something.com","some-page.html");
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
+
+    @Test 
+    public void testBreak2File() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/break2-file.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
+
+    @Test 
+    public void testBreak3File() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/break3-file.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
     }
 }
