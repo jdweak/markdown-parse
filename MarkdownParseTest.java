@@ -23,7 +23,7 @@ public class MarkdownParseTest {
 
     @Test 
     public void testBreak1File() throws IOException{
-        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/break-file.md"));
+        String contents = Files.readString(Path.of("./break-file.md"));
         List<String> expected = List.of("https://something.com","some-page.html");
         assertEquals(expected,MarkdownParse.getLinks(contents));
     }
