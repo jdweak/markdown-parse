@@ -41,4 +41,58 @@ public class MarkdownParseTest {
         List<String> expected = List.of();
         assertEquals(expected,MarkdownParse.getLinks(contents));
     }
+
+
+
+    //-------------------------------------------------------------------------------
+    @Test 
+    public void testGetLinks2() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file2.md"));
+        List<String> expected = List.of("https://something.com","some-page.html");
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
+
+    @Test 
+    public void testGetLinks3() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file3.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
+
+    @Test 
+    public void testGetLinks4() throws IOException{
+        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file4.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
+
+    // @Test 
+    // public void testGetLinks5() throws IOException{
+    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file5.md"));
+    //     List<String> expected = List.of("https://something.com","some-page.html");
+    //     assertEquals(expected,MarkdownParse.getLinks(contents));
+    // }
+
+    // @Test 
+    // public void testGetLinks6() throws IOException{
+    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file6.md"));
+    //     List<String> expected = List.of("https://something.com","some-page.html");
+    //     assertEquals(expected,MarkdownParse.getLinks(contents));
+    // }
+
+    // @Test 
+    // public void testGetLinks7() throws IOException{
+    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file7.md"));
+    //     List<String> expected = List.of("https://something.com","some-page.html");
+    //     assertEquals(expected,MarkdownParse.getLinks(contents));
+    // }
+
+    // @Test 
+    // public void testGetLinks8() throws IOException{
+    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file8.md"));
+    //     List<String> expected = List.of("https://something.com","some-page.html");
+    //     assertEquals(expected,MarkdownParse.getLinks(contents));
+    // }
+
+    
 }
