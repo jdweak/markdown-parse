@@ -16,6 +16,7 @@ public class MarkdownParse {
             if(nextCloseBracket == -1 || nextOpenBracket == -1){
                 break;
             }
+            //check before and after the [] for incorrect syntax
             try{
                 if(markdown.charAt(nextCloseBracket + 1) == '(' && markdown.charAt(nextOpenBracket - 1) != '!'){
                     int openParen = markdown.indexOf("(", nextCloseBracket);
