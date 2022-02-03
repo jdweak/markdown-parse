@@ -66,31 +66,31 @@ public class MarkdownParseTest {
         assertEquals(expected,MarkdownParse.getLinks(contents));
     }
 
-    // @Test 
-    // public void testGetLinks5() throws IOException{
-    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file5.md"));
-    //     List<String> expected = List.of("https://something.com","some-page.html");
-    //     assertEquals(expected,MarkdownParse.getLinks(contents));
-    // }
+    @Test 
+    public void testGetLinks5() throws IOException{
+        String contents = Files.readString(Path.of("./test-file5.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
 
     // @Test 
     // public void testGetLinks6() throws IOException{
     //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file6.md"));
-    //     List<String> expected = List.of("https://something.com","some-page.html");
+    //     List<String> expected = List.of();
     //     assertEquals(expected,MarkdownParse.getLinks(contents));
     // }
 
-    // @Test 
-    // public void testGetLinks7() throws IOException{
-    //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file7.md"));
-    //     List<String> expected = List.of("https://something.com","some-page.html");
-    //     assertEquals(expected,MarkdownParse.getLinks(contents));
-    // }
+    @Test 
+    public void testGetLinks7() throws IOException{
+        String contents = Files.readString(Path.of("./test-file7.md"));
+        List<String> expected = List.of();
+        assertEquals(expected,MarkdownParse.getLinks(contents));
+    }
 
     // @Test 
     // public void testGetLinks8() throws IOException{
     //     String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file8.md"));
-    //     List<String> expected = List.of("https://something.com","some-page.html");
+    //     List<String> expected = List.of();
     //     assertEquals(expected,MarkdownParse.getLinks(contents));
     // }
 
