@@ -17,7 +17,7 @@ public class MarkdownParse {
                 break;
             }
             try{
-                if(markdown.charAt(nextCloseBracket + 1) == '('){
+                if(markdown.charAt(nextCloseBracket + 1) == '(' && markdown.charAt(nextOpenBracket - 1) != '!'){
                     int openParen = markdown.indexOf("(", nextCloseBracket);
                     int closeParen = markdown.indexOf(")", openParen);
                     toReturn.add(markdown.substring(openParen + 1, closeParen));

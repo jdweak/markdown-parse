@@ -75,7 +75,7 @@ public class MarkdownParseTest {
 
     @Test 
     public void testGetLinks6() throws IOException{
-        String contents = Files.readString(Path.of("C:/Users/jonat/git/markdown-parse/test-file6.md"));
+        String contents = Files.readString(Path.of("./test-file6.md"));
         List<String> expected = List.of();
         assertEquals(expected,MarkdownParse.getLinks(contents));
     }
