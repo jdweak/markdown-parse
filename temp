@@ -1,9 +1,268 @@
-public class Test {
-    public static void main(String[] args) {
-        while(true){
-            int x = 10;
-            System.out.println("hi");
-            hi
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:              PA6.java
+// Files:              PA6.java, RedditDataPoint.java
+// Quarter:            Winter 2022
+//
+// Author:             Cash Rice
+// Email:              cmrice@ucsd.edu
+// Instructor's Name:  Greg Miranda
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ///////////////////
+//
+//                  CHECK ASSIGNMENT PAGE TO see IF PAIR-PROGRAMMING IS ALLOWED
+//                  If pair programming is allowed:
+//                  1. Read PAIR-PROGRAMMING policy
+//                  2. Choose a partner wisely
+//                  3. Complete this section for each program file
+//
+// Pair Partner:        Devanshi Jain
+// Email:               djain@ucsd.edu
+// Instructors's Name:  Greg Miranda
+// Lab Section:         A02
+//
+//////////////////// STUDENTS WHO GET HELP FROM OTHER THAN THEIR PARTNER //////
+//                   must fully acknowledge and credit those sources of help.
+//                   Instructors and TAs do not have to be credited here,
+//                   but roommates, relatives, strangers, etc do.
+//
+// Persons:          Jonathan Weakliem (jweakliem@ucsd.edu)
+//
+//////////////////////////// 80 columns wide //////////////////////////////////
+
+import java.util.Scanner;
+import javax.swing.JSpinner.NumberEditor;
+import java.io.*;
+import java.util.*;
+import java.io.BufferedReader;
+
+/**
+ * Reads in data from external file storing using RedditDataPoint
+ * and prints all totals
+ *
+ * Bugs: None Known
+ *
+ * @author Cash Rice
+ */
+
+import java.util.Scanner;
+import javax.swing.JSpinner.NumberEditor;
+import java.io.*;
+import java.util.*;
+import java.io.BufferedReader;
+
+public class PA6 {
+    // PROVIDED CONSTANT
+    private static final String DELIMITER = ","; // CSV file delimiter
+    private static final int NAME_INDEX = 0; // A
+    private static final int TEXT_INDEX = 114; // DK
+    private static final int LEX_LIWC_I_INDEX = 19; // T
+    private static final int LEX_LIWC_WE_INDEX = 20; // U
+    private static final int LEX_LIWC_SHEHE_INDEX = 22; // W
+
+    /**
+     * Reads file into a arraylist of RedditDataPoint and fills categories 
+     * with the appropriate names
+     *
+     * @param data ArrayList<RedditDataPoint> (an ArrayList containing all 
+     * posts and their recorded information)
+     * @param categories ArrayList<String> (an ArrayList containing all 
+     * subreddit names)
+     * @return ArrayList readData, consisting of RedditDataPoint elements
+     */
+    public static ArrayList<RedditDataPoint> readData(String fileName, ArrayList<String> categories)
+            throws IOException {
+        // Create new ArrayList to store the data from the file
+        ArrayList<RedditDataPoint> data = new ArrayList<RedditDataPoint>();
+        FileReader inputFile = new FileReader(fileName);
+        BufferedReader newReader = new BufferedReader(inputFile);
+        String[] nextLine;
+        RedditDataPoint item;
+
+        newReader.readLine();
+        // nextLine = newReader.readLine();
+        // System.out.println(nextLine);
+
+        String name;
+        String text;
+        double ICount; 
+        double weCount;
+        double sheheCount;
+        
+        /* takes variables at given indicies and creates RedditDataPoint 
+         * also adds item name to categories should it not be present 
+         */
+        while (newReader.ready()) {
+            nextLine = newReader.readLine().split(DELIMITER);
+            name = nextLine[NAME_INDEX];
+            text = nextLine[TEXT_INDEX];
+            ICount = Double.parseDouble(nextLine[LEX_LIWC_I_INDEX]);
+            weCount = Double.parseDouble(nextLine[LEX_LIWC_WE_INDEX]);
+            sheheCount = Double.parseDouble(nextLine[LEX_LIWC_SHEHE_INDEX]);
+
+            item = new RedditDataPoint(name, text, ICount, weCount, sheheCount);
+
+            data.add(item);
+
+            if (!categories.contains(name)) {
+                categories.add(name);
+            }
+        }
+
+        newReader.close();
+        return data;
+    }
+
+    /**
+     * Prints the total number of posts with their associated category
+     *
+     * @param data ArrayList<RedditDataPoint> (an ArrayList containing all posts 
+     * and their recorded information)
+     * @param categories ArrayList<String> (an ArrayList containing all subreddit 
+     * names)
+     * @return void
+     */
+    public static void printTotalPosts(ArrayList<RedditDataPoint> data, ArrayList<String> categories) {
+        String categoryName;
+        String name;
+        RedditDataPoint item; 
+        int totalPosts; 
+
+        // increments total for every name which equals a given category
+        for (int i = 0; i < categories.size(); i++) {
+            totalPosts = 0;
+            categoryName = categories.get(i);
+            for (int j = 0; j < data.size(); j++) {
+                item = data.get(j);
+                name = item.getName();
+                if (categoryName.equals(name)) {
+                    totalPosts++;
+                }
+            }
+            System.out.println("r/" + categoryName + " total posts: " + totalPosts);
         }
     }
+
+    /**
+     * Prints out total count of posts which use "I"
+     *
+     * @param data ArrayList<RedditDataPoint> (an ArrayList containing all posts 
+     * and their recorded information)
+     * @param categories ArrayList<String> (an ArrayList containing all subreddit 
+     * names)
+     * @return void
+     */
+    public static void printTotalLexLiwcI(ArrayList<RedditDataPoint> data, ArrayList<String> categories) {
+        String categoryName;
+        String nameI;
+        RedditDataPoint item; 
+        double totalI; 
+        double itemNumOfI;
+
+        // increments total for every name associated with "I" in a given category
+        for (int i = 0; i < categories.size(); i++) {
+            totalI = 0.0;
+            categoryName = categories.get(i);
+            for (int j = 0; j < data.size(); j++) {
+                item = data.get(j);
+                itemNumOfI = item.getLexLiwcI();
+                nameI = item.getName();
+                if (categoryName.equals(nameI) && itemNumOfI > 0) {
+                    totalI += 1;
+                }
+            }
+            System.out.println("r/" + categoryName + " total lex_liwc_i: " + (int)totalI);
+        }
+    }
+
+    /**
+     * Prints out total count of posts which use "We"
+     *
+     * @param data ArrayList<RedditDataPoint> (an ArrayList containing all posts 
+     * and their recorded information)
+     * @param categories ArrayList<String> (an ArrayList containing all subreddit 
+     * names)
+     * @return void
+     */
+    public static void printTotalLexLiwcWe(ArrayList<RedditDataPoint> data, ArrayList<String> categories) {
+        String categoryName;
+        String nameWe;
+        RedditDataPoint item; 
+        double totalWe; 
+        double itemNumOfWe;
+
+        // increments total for every name associated with "we" in a given category
+        for (int i = 0; i < categories.size(); i++) {
+            totalWe = 0.0;
+            categoryName = categories.get(i);
+            for (int j = 0; j < data.size(); j++) {
+                item = data.get(j);
+                itemNumOfWe = item.getLexLiwcWe();
+                nameWe = item.getName();
+                if (categoryName.equals(nameWe) && itemNumOfWe > 0) {
+                    totalWe += 1;
+                }
+            }
+            System.out.println("r/" + categoryName + " total lex_liwc_we: " + (int)totalWe);
+        }
+    }
+
+    /**
+     * Prints out total count of posts which use "She/He"
+     *
+     * @param data ArrayList<RedditDataPoint> (an ArrayList containing all posts 
+     * and their recorded information)
+     * @param categories ArrayList<String> (an ArrayList containing all subreddit 
+     * names)
+     * @return void
+     */
+    public static void printTotalLexLiwcShehe(ArrayList<RedditDataPoint> data, ArrayList<String> categories) {
+        String categoryName;
+        String nameSheHe;
+        RedditDataPoint item; 
+        double totalSheHe; 
+        double itemNumOfSheHe;
+
+        // increments total for every name associated with "she/he" in a given category
+        for (int i = 0; i < categories.size(); i++) {
+            totalSheHe = 0.0;
+            categoryName = categories.get(i);
+            for (int j = 0; j < data.size(); j++) {
+                item = data.get(j);
+                itemNumOfSheHe = item.getLexLiwcShehe();
+                nameSheHe = item.getName();
+                if (categoryName.equals(nameSheHe) && itemNumOfSheHe > 0) {
+                    totalSheHe += 1;
+                }
+            }
+            System.out.println("r/" + categoryName + " total lex_liwc_shehe: " + (int)totalSheHe);
+        }
+    }
+
+    /*
+     * Starpoint OPTIONAL
+     */
+    public static void printStarPointAverage(ArrayList<RedditDataPoint> data, ArrayList<String> categories) {
+
+    }
+
+    /**
+     * Tests all methods made thus far using Reddit_Data.cvs
+     *
+     * @param args[] String (not used in this)
+     * @return void
+     */
+    public static void main(String args[]) throws IOException {
+        ArrayList<String> categories = new ArrayList<>();
+        ArrayList<RedditDataPoint> dataList = readData("Reddit_Data.csv", categories);
+
+        printTotalPosts(dataList, categories);
+        System.out.println();
+        printTotalLexLiwcI(dataList, categories);
+        System.out.println();
+        printTotalLexLiwcWe(dataList, categories);
+        System.out.println();
+        printTotalLexLiwcShehe(dataList, categories);
+    }
+
 }
